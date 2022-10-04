@@ -70,6 +70,8 @@ class PerfectlyCache
     public static function clearCacheByTable(...$tables)
     {
         $tables = collect($tables)->flatten()->toArray();
+        error_log("Clearing cache by tables (" . implode(',', $tables) . ").");
+
         $keys = Cache::get("perfectly_cache_keys", []);
 
         $keysToBeForget = array_filter($keys, function ($key) use ($tables) {

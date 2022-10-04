@@ -1,5 +1,5 @@
 {
-    "name": "mtgofa/laravel-query-cache-relationship",
+    "name": "mtgofa/laravel-query-cache",
     "description": "Laravel database cache package and missing relationship events.",
     "license": "MIT",
     "keywords": [

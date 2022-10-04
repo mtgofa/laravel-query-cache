@@ -124,6 +124,25 @@ trait HasManyEvents
         static::registerModelHasManyEvent('hasManyDeleted', $callback);
     }
 
+    /**
+     * Register a restored model event with the dispatcher.
+     *
+     * @param \Closure|string $callback
+     */
+    public static function hasManyRestoring($callback)
+    {
+        static::registerModelHasManyEvent('hasManyRestoring', $callback);
+    }
+
+    /**
+     * Register a restored model event with the dispatcher.
+     *
+     * @param \Closure|string $callback
+     */
+    public static function hasManyRestored($callback)
+    {
+        static::registerModelHasManyEvent('hasManyRestored', $callback);
+    }
 
     /**
      * Fire the given event for the model relationship.

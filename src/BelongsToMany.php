@@ -30,11 +30,11 @@ class BelongsToMany extends BelongsToManyBase implements EventDispatcher
      */
     public function toggle($ids, $touch = true)
     {
-        $this->parent->fireModelBelongsToManyEvent('toggling', $this->getRelationName(), $ids);
+        $this->parent->fireModelBelongsToManyEvent('toggling', get_class($this->related), $ids);
 
         $result = parent::toggle($ids, $touch);
 
-        $this->parent->fireModelBelongsToManyEvent('toggled', $this->getRelationName(), $ids, [], false);
+        $this->parent->fireModelBelongsToManyEvent('toggled', get_class($this->related), $ids, [], false);
 
         return $result;
     }
@@ -49,11 +49,12 @@ class BelongsToMany extends BelongsToManyBase implements EventDispatcher
      */
     public function sync($ids, $detaching = true)
     {
-        $this->parent->fireModelBelongsToManyEvent('syncing', $this->getRelationName(), $ids);
+        //dd($this);
+        $this->parent->fireModelBelongsToManyEvent('syncing', get_class($this->related), $ids);
 
         $result = parent::sync($ids, $detaching);
 
-        $this->parent->fireModelBelongsToManyEvent('synced', $this->getRelationName(), $ids, [], false);
+        $this->parent->fireModelBelongsToManyEvent('synced', get_class($this->related), $ids, [], false);
 
         return $result;
     }
@@ -69,10 +70,10 @@ class BelongsToMany extends BelongsToManyBase implements EventDispatcher
      */
     public function updateExistingPivot($id, array $attributes, $touch = true)
     {
-        $this->parent->fireModelBelongsToManyEvent('updatingExistingPivot', $this->getRelationName(), $id, $attributes);
+        $this->parent->fireModelBelongsToManyEvent('updatingExistingPivot', get_class($this->related), $id, $attributes);
 
         if ($result = parent::updateExistingPivot($id, $attributes, $touch)) {
-            $this->parent->fireModelBelongsToManyEvent('updatedExistingPivot', $this->getRelationName(), $id, $attributes, false);
+            $this->parent->fireModelBelongsToManyEvent('updatedExistingPivot', get_class($this->related), $id, $attributes, false);
         }
 
         return $result;
@@ -87,11 +88,11 @@ class BelongsToMany extends BelongsToManyBase implements EventDispatcher
      */
     public function attach($id, array $attributes = [], $touch = true)
     {
-        $this->parent->fireModelBelongsToManyEvent('attaching', $this->getRelationName(), $id, $attributes);
+        $this->parent->fireModelBelongsToManyEvent('attaching', get_class($this->related), $id, $attributes);
 
         parent::attach($id, $attributes, $touch);
 
-        $this->parent->fireModelBelongsToManyEvent('attached', $this->getRelationName(), $id, $attributes, false);
+        $this->parent->fireModelBelongsToManyEvent('attached', get_class($this->related), $id, $attributes, false);
     }
 
     /**
@@ -105,14 +106,14 @@ class BelongsToMany extends BelongsToManyBase implements EventDispatcher
     public function detach($ids = null, $touch = true)
     {
         // Get detached ids to pass them to event
-        $ids = $ids ?? $this->parent->{$this->getRelationName()}->pluck($this->relatedKey);
+        $ids = $ids ?? $this->parent->{get_class($this->related)}->pluck($this->relatedKey);
 
-        $this->parent->fireModelBelongsToManyEvent('detaching', $this->getRelationName(), $ids);
+        $this->parent->fireModelBelongsToManyEvent('detaching', get_class($this->related), $ids);
 
         if ($result = parent::detach($ids, $touch)) {
             // If records are detached fire detached event
             // Note: detached event will be fired even if one of all records have been detached
-            $this->parent->fireModelBelongsToManyEvent('detached', $this->getRelationName(), $ids, [], false);
+            $this->parent->fireModelBelongsToManyEvent('detached', get_class($this->related), $ids, [], false);
         }
 
         return $result;

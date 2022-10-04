@@ -1,3 +1,11 @@
+# Introduction
+
+This package based on 2 packages
+	- whthT/perfectly-cache
+	- chelout/laravel-relationship-events
+It's a merge between cache package and relationships events to clear cache if change happened throw relationship.
+Special Thanks
+
 # PerfectlyCache
 
 Laravel eloquent query cache package.
@@ -12,7 +20,7 @@ PerfectlyCache automatically redirects the same query to the model when you need
 Execute the following command to get the latest version of the package:
 
 ```
-composer require whtht/perfectly-cache
+composer require mtgofa/laravel-query-cache
 ```
 
 - Publish Configuration
@@ -29,11 +37,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-use MTGofa\QueryCache\Traits\PerfectlyCachable;
+use MTGofa\QueryCache\Traits\QueryCachable;
 
 class User extends Model
 {
-    use PerfectlyCachable;
+    use QueryCachable;
 }
 
 ```
@@ -43,7 +51,7 @@ All database queries you make through this model will be cached and will be read
 ## Configuration
 ```php
 // config('perfectly-cache.(name)')
-// Eq: config('perfecyly-cache.enabled')
+// Eq: config('perfectly-cache.enabled')
 return [
 
     "enabled" => true, // Is cache enabled? cache for production --> !env('APP_DEBUG', false)

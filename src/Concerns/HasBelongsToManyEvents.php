@@ -62,6 +62,26 @@ trait HasBelongsToManyEvents
      *
      * @param \Closure|string $callback
      */
+    public static function belongsToManyCreating($callback)
+    {
+        static::registerModelBelongsToManyEvent('belongsToManyCreating', $callback);
+    }
+
+    /**
+     * Register a deleted model event with the dispatcher.
+     *
+     * @param \Closure|string $callback
+     */
+    public static function belongsToManyCreated($callback)
+    {
+        static::registerModelBelongsToManyEvent('belongsToManyCreated', $callback);
+    }
+
+    /**
+     * Register a deleted model event with the dispatcher.
+     *
+     * @param \Closure|string $callback
+     */
     public static function belongsToManyAttaching($callback)
     {
         static::registerModelBelongsToManyEvent('belongsToManyAttaching', $callback);
@@ -196,8 +216,8 @@ trait HasBelongsToManyEvents
         return !empty($result) ? $result : static::$dispatcher->{$method}(
             "eloquent.{$event}: " . static::class,
             [
+                get_class($this),
                 $relation,
-                $this,
                 $parsedIdsForEvent,
                 $parseAttributesForEvent,
             ]

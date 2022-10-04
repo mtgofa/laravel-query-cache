@@ -93,7 +93,7 @@ trait HasOneOrManyMethods
      */
     public function fireModelRelationshipEvent($event, $related = null, $halt = true)
     {
-        return $this->parent->{'fireModel' . class_basename(static::class) . 'Event'}($event, $related, $halt);
+        return $this->parent->{'fireModel' . class_basename(static::class) . 'Event'}($event, get_class($this->related), $halt);
     }
 
     /**
@@ -111,12 +111,24 @@ trait HasOneOrManyMethods
 
     public function delete()
     {
-        //dd($this->related);
-        $related = get_class($this->related);
-        //dd($related);
-        $this->fireModelRelationshipEvent('deleting', $related, false);
-        parent::delete();
-        $this->fireModelRelationshipEvent('deleted', $related, false);
+        $relatedClass = get_class($this->related);
+        $this->fireModelRelationshipEvent('deleting', $relatedClass);
+        $result = parent::delete();
+        if (false !== $result) {
+            $this->fireModelRelationshipEvent('deleted', $relatedClass, false);
+        }
+        return true;
+    }
+
+    public function restore()
+    {
+        $relatedClass = get_class($this->related);
+        $this->fireModelRelationshipEvent('restoring', $relatedClass);
+        $result = parent::restore();
+        //error_log($result);
+        if (false !== $result) {
+            $this->fireModelRelationshipEvent('restored', $relatedClass, false);
+        }
         return true;
     }
 }
