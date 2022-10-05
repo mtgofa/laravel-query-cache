@@ -12,6 +12,37 @@ return [
     "clear_events" => [
         "created",
         "updated",
-        "deleted"
+        "deleted",
+        "restored",
+
+        //"hasManyCreated",
+        "hasManyUpdated",
+        "hasManyDeleted",
+        "hasManyRestored",
+
+        "belongsToUpdated",
+        "belongsToAssociated",
+        "belongsToDissociated",
+
+        //"belongsToManyCreated",
+        "belongsToManyAttached",
+        "belongsToManyDetached",
+        "belongsToManySynced",
+
+        "morphToAttached",
+        "morphToDetached",
+        "morphToUpdated",
+
+        "morphByManyAttached",
+        "morphByManyDetached",
+        "morphByManySynced",
+        "morphByManyToggled",
+        "morphByManyUpdatedExistingPivot",
+
+        "morphToManyAttached",
+        "morphToManyDetached",
+        "morphToManySynced",
+        "morphToManyToggled",
+        "morphToManyUpdatedExistingPivot",
     ],
 ];

@@ -177,7 +177,7 @@ trait HasManyEvents
         return !empty($result) ? $result : static::$dispatcher->{$method}(
             "eloquent.{$event}: " . static::class,
             [
-                $this,
+                $event,
                 $related,
             ]
         );

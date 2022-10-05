@@ -216,6 +216,7 @@ trait HasBelongsToManyEvents
         return !empty($result) ? $result : static::$dispatcher->{$method}(
             "eloquent.{$event}: " . static::class,
             [
+                $event,
                 get_class($this),
                 $relation,
                 $parsedIdsForEvent,

@@ -1,9 +1,13 @@
 # Introduction
 
 This package based on 2 packages
+
 	- whthT/perfectly-cache
+
 	- chelout/laravel-relationship-events
+
 It's a merge between cache package and relationships events to clear cache if change happened throw relationship.
+
 Special Thanks
 
 # PerfectlyCache
@@ -65,7 +69,8 @@ return [
     "clear_events" => [
         "created",
         "updated",
-        "deleted"
+        "deleted",
+        "restored"
     ],
 ];
 

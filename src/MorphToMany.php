@@ -28,11 +28,11 @@ class MorphToMany extends MorphToManyBase implements EventDispatcher
      */
     public function toggle($ids, $touch = true)
     {
-        $this->parent->fireModelMorphToManyEvent('toggling', $this->getRelationName(), $ids);
+        $this->parent->fireModelMorphToManyEvent('toggling', get_class($this->related), $ids);
 
         $result = parent::toggle($ids, $touch);
 
-        $this->parent->fireModelMorphToManyEvent('toggled', $this->getRelationName(), $ids, [], false);
+        $this->parent->fireModelMorphToManyEvent('toggled', get_class($this->related), $ids, [], false);
 
         return $result;
     }
@@ -47,11 +47,11 @@ class MorphToMany extends MorphToManyBase implements EventDispatcher
      */
     public function sync($ids, $detaching = true)
     {
-        $this->parent->fireModelMorphToManyEvent('syncing', $this->getRelationName(), $ids);
+        $this->parent->fireModelMorphToManyEvent('syncing', get_class($this->related), $ids);
 
         $result = parent::sync($ids, $detaching);
 
-        $this->parent->fireModelMorphToManyEvent('synced', $this->getRelationName(), $ids, [], false);
+        $this->parent->fireModelMorphToManyEvent('synced', get_class($this->related), $ids, [], false);
 
         return $result;
     }
@@ -67,10 +67,10 @@ class MorphToMany extends MorphToManyBase implements EventDispatcher
      */
     public function updateExistingPivot($id, array $attributes, $touch = true)
     {
-        $this->parent->fireModelMorphToManyEvent('updatingExistingPivot', $this->getRelationName(), $id, $attributes);
+        $this->parent->fireModelMorphToManyEvent('updatingExistingPivot', get_class($this->related), $id, $attributes);
 
         if ($result = parent::updateExistingPivot($id, $attributes, $touch)) {
-            $this->parent->fireModelMorphToManyEvent('updatedExistingPivot', $this->getRelationName(), $id, $attributes, false);
+            $this->parent->fireModelMorphToManyEvent('updatedExistingPivot', get_class($this->related), $id, $attributes, false);
         }
 
         return $result;
@@ -85,11 +85,11 @@ class MorphToMany extends MorphToManyBase implements EventDispatcher
      */
     public function attach($id, array $attributes = [], $touch = true)
     {
-        $this->parent->fireModelMorphToManyEvent('attaching', $this->getRelationName(), $id, $attributes);
+        $this->parent->fireModelMorphToManyEvent('attaching', get_class($this->related), $id, $attributes);
 
         parent::attach($id, $attributes, $touch);
 
-        $this->parent->fireModelMorphToManyEvent('attached', $this->getRelationName(), $id, $attributes, false);
+        $this->parent->fireModelMorphToManyEvent('attached', get_class($this->related), $id, $attributes, false);
     }
 
     /**
@@ -105,12 +105,12 @@ class MorphToMany extends MorphToManyBase implements EventDispatcher
         // Get detached ids to pass them to event
         $ids = $ids ?? $this->parent->{$this->getRelationName()}->pluck($this->relatedKey);
 
-        $this->parent->fireModelMorphToManyEvent('detaching', $this->getRelationName(), $ids);
+        $this->parent->fireModelMorphToManyEvent('detaching', get_class($this->related), $ids);
 
         if ($result = parent::detach($ids, $touch)) {
             // If records are detached fire detached event
             // Note: detached event will be fired even if one of all records have been detached
-            $this->parent->fireModelMorphToManyEvent('detached', $this->getRelationName(), $ids, [], false);
+            $this->parent->fireModelMorphToManyEvent('detached', get_class($this->related), $ids, [], false);
         }
 
         return $result;

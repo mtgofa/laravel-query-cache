@@ -139,6 +139,7 @@ trait HasBelongsToEvents
         return !empty($result) ? $result : static::$dispatcher->{$method}(
             "eloquent.{$event}: " . static::class,
             [
+                $event,
                 $relation,
                 $this,
                 $parent,

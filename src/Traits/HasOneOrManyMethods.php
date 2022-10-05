@@ -117,7 +117,7 @@ trait HasOneOrManyMethods
         if (false !== $result) {
             $this->fireModelRelationshipEvent('deleted', $relatedClass, false);
         }
-        return true;
+        return $result;
     }
 
     public function restore()
@@ -129,6 +129,6 @@ trait HasOneOrManyMethods
         if (false !== $result) {
             $this->fireModelRelationshipEvent('restored', $relatedClass, false);
         }
-        return true;
+        return $result;
     }
 }

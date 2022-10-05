@@ -54,7 +54,10 @@ class BelongsToMany extends BelongsToManyBase implements EventDispatcher
 
         $result = parent::sync($ids, $detaching);
 
-        $this->parent->fireModelBelongsToManyEvent('synced', get_class($this->related), $ids, [], false);
+        $changes = count($result['attached']) + count($result['updated']) + count($result['detached']);
+        if ($changes > 0) {
+            $this->parent->fireModelBelongsToManyEvent('synced', get_class($this->related), $ids, [], false);
+        }
 
         return $result;
     }
@@ -106,7 +109,7 @@ class BelongsToMany extends BelongsToManyBase implements EventDispatcher
     public function detach($ids = null, $touch = true)
     {
         // Get detached ids to pass them to event
-        $ids = $ids ?? $this->parent->{get_class($this->related)}->pluck($this->relatedKey);
+        $ids = $ids ?? $this->parent->{$this->getRelationName()}->pluck($this->relatedKey);
 
         $this->parent->fireModelBelongsToManyEvent('detaching', get_class($this->related), $ids);
 
