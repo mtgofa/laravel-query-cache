@@ -30,7 +30,7 @@ composer require mtgofa/laravel-query-cache
 - Publish Configuration
 
 ```
-php artisan vendor:publish --provider="MTGofa\QueryCache\Providers\PerfectlyCacheServiceProvider"
+php artisan vendor:publish --provider="MTGofa\QueryCache\Providers\QueryCacheServiceProvider"
 ```
 
 - Use trait on your models   
