@@ -91,12 +91,12 @@ trait QueryCacheable
             'hasManyDeleted',
             'hasManyRestored',
         ] as $event) {
-            static::$event(function ($event, $related) {
-                if (in_array($event, config('perfectly-cache.clear_events', ['created', 'updated', 'deleted', 'restored']))) {
+            if (in_array($event, config('perfectly-cache.clear_events', ['created', 'updated', 'deleted', 'restored']))) {
+                static::$event(function ($event, $related) {
                     error_log("$event:$related");
                     PerfectlyCache::clearCacheByTable(resolve($related)->getTable());
-                }
-            });
+                });
+            }
         }
         /* End hasMany Events */
 
@@ -111,12 +111,12 @@ trait QueryCacheable
             'belongsToManyDetached',
             'belongsToManySynced',
         ] as $event) {
-            static::$event(function ($event, $parent, $related) {
-                if (in_array($event, config('perfectly-cache.clear_events', ['created', 'updated', 'deleted', 'restored']))) {
+            if (in_array($event, config('perfectly-cache.clear_events', ['created', 'updated', 'deleted', 'restored']))) {
+                static::$event(function ($event, $parent, $related) {
                     error_log("$event:$parent,$related");
                     PerfectlyCache::clearCacheByTable(resolve($parent)->getTable(), resolve($related)->getTable());
-                }
-            });
+                });
+            }
         }
         /* End belongsTo / belongsToMany  Events */
 
@@ -138,12 +138,12 @@ trait QueryCacheable
             'morphToManyToggled',
             'morphToManyUpdatedExistingPivot',
         ] as $event) {
-            static::$event(function ($event, $parent, $related) {
-                if (in_array($event, config('perfectly-cache.clear_events', ['created', 'updated', 'deleted', 'restored']))) {
+            if (in_array($event, config('perfectly-cache.clear_events', ['created', 'updated', 'deleted', 'restored']))) {
+                static::$event(function ($event, $parent, $related) {
                     error_log("$event:$parent,$related");
                     PerfectlyCache::clearCacheByTable(resolve($parent)->getTable(), resolve($related)->getTable());
-                }
-            });
+                });
+            }
         }
         /* End morphTo / morphToOne / morphToMany Events */
         parent::boot();
